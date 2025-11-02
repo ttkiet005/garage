@@ -1,6 +1,6 @@
 flask
 opencv-python
-ultralytics
-paddlepaddle==2.6.1
-paddleocr
 numpy
+ultralytics
+paddleocr==2.7.0.3
+onnxruntime
