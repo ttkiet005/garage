@@ -1,9 +1,3 @@
-[build]
-builder = "Docker"
-
-[deploy]
-startCommand = "gunicorn -b 0.0.0.0:5000 server:app"
-restartPolicyType = "ON_FAILURE"
-
 [service]
 internalPort = 5000
+startCommand = "gunicorn -b 0.0.0.0:5000 main:app"

@@ -25,4 +25,4 @@ COPY . .
 EXPOSE 5000
 
 # Lệnh chạy (Gunicorn cho production)
-CMD ["gunicorn", "-b", "0.0.0.0:5000", "server:app"]
+CMD ["gunicorn", "-b", "0.0.0.0:5000", "main:app"]
