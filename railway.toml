@@ -1,5 +1,9 @@
 [build]
-buildCommand = "pip install -r requirements.txt"
+builder = "Docker"
 
 [deploy]
-startCommand = "python server.py"
+startCommand = "gunicorn -b 0.0.0.0:5000 server:app"
+restartPolicyType = "ON_FAILURE"
+
+[service]
+internalPort = 5000

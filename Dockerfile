@@ -1,24 +1,28 @@
-FROM python:3.11-slim
+FROM python:3.10-slim
 
-WORKDIR /app
-
+# Cài Tesseract OCR và các thư viện cần thiết
 RUN apt-get update && apt-get install -y \
-    cmake \
-    build-essential \
-    libgl1 \
-    libglib2.0-0 \
-    libopenblas-dev \
-    liblapack-dev \
-    libx11-dev \
+    tesseract-ocr \
+    libtesseract-dev \
+    libleptonica-dev \
+    gcc \
+    && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
+# Tạo thư mục ứng dụng
+WORKDIR /app
+
+# Copy file yêu cầu
 COPY requirements.txt .
-RUN pip install --upgrade pip
+
+# Cài Python libs
 RUN pip install --no-cache-dir -r requirements.txt
 
-# ❗ Chỉ sửa dòng này
-COPY . /app/
+# Copy toàn bộ server vào container
+COPY . .
 
+# Expose port
 EXPOSE 5000
 
-CMD ["python", "server.py"]
+# Lệnh chạy (Gunicorn cho production)
+CMD ["gunicorn", "-b", "0.0.0.0:5000", "server:app"]
